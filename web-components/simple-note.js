@@ -13,18 +13,18 @@ class SimpleNote extends LitElement {
     return css`
       textarea {
         resize: none;
-        overflow: auto;
-        width: 100%;
-        height: 80%;
         outline: none;
+        width: 100%;
+        min-height: 100px;
+        box-sizing: border-box;
+        overflow: hidden;
       }
       .note { 
         border: 2px solid gray;
         border-radius: 15px;
-        width: 200px;
-        height: 200px;
-        padding: 10px;
-        text-overflow: ellipsis;
+        width: 250px;
+        height: auto;
+        padding: 20px;
       }
       .header {
         display: flex;
@@ -35,6 +35,15 @@ class SimpleNote extends LitElement {
         cursor: pointer;
       }
     `
+  }
+
+  updated() {
+    if (this.text.length === 0) {
+      this.edit = true
+    }
+    if (this.edit) {
+      this.resizeText()
+    }
   }
 
   editNote() {
@@ -68,6 +77,15 @@ class SimpleNote extends LitElement {
     }
   }
 
+  resizeText() {
+    let content = this.shadowRoot.getElementById('content')
+
+    if (content) {
+      content.style.height = `1px`
+      content.style.height = `${(content.scrollHeight + 25)}px`
+    }
+  }
+
   render() {
     return html`
        <div class="note">
@@ -77,7 +95,15 @@ class SimpleNote extends LitElement {
           </div>
           ${
             this.edit
-              ? html`<textarea @input=${this.handleInputChange} @keyup=${this.handleKeyPress} @blur=${this.editNote}>${this.text}</textarea>`
+              ? html`
+                  <textarea
+                    id="content"
+                    @input=${this.handleInputChange}
+                    @keyup=${this.handleKeyPress}
+                    @blur=${this.editNote}
+                    placeholder="Your note here..."
+                  >${this.text}</textarea>
+                `
               : html`<p>${this.text}</p>`
           }
         </div>

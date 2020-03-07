@@ -34,3 +34,11 @@ export const NoteWithLongText = () => html`
     @save-note="${action('save')}"
     ></simple-note>
 `
+
+export const EmptyNote = () => html`
+  <simple-note
+    text=""
+    @delete-note="${action('delete')}"
+    @save-note="${action('save')}"
+    ></simple-note>
+`
