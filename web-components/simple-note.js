@@ -38,6 +38,12 @@ class SimpleNote extends LitElement {
       svg {
         cursor: pointer;
       }
+      svg:hover {
+        opacity: 0.5;
+      }
+      svg:active {
+        opacity: 0.75;
+      }
       p {
         white-space: pre-wrap;
         overflow-wrap: break-word;
