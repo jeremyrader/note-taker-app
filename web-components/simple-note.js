@@ -16,7 +16,6 @@ class SimpleNote extends LitElement {
         outline: none;
         width: 100%;
         min-height: 100px;
-        box-sizing: border-box;
         overflow: hidden;
       }
       .note { 
@@ -25,6 +24,7 @@ class SimpleNote extends LitElement {
         width: 250px;
         height: auto;
         padding: 20px;
+        white-space: pre-line;
       }
       .header {
         display: flex;
@@ -71,12 +71,6 @@ class SimpleNote extends LitElement {
     this.text = event.target.value
   }
 
-  handleKeyPress(event) {
-    if (event.keyCode === 13) {
-      this.editNote()
-    }
-  }
-
   resizeText() {
     let content = this.shadowRoot.getElementById('content')
 
@@ -99,7 +93,6 @@ class SimpleNote extends LitElement {
                   <textarea
                     id="content"
                     @input=${this.handleInputChange}
-                    @keyup=${this.handleKeyPress}
                     @blur=${this.editNote}
                     placeholder="Your note here..."
                   >${this.text}</textarea>
