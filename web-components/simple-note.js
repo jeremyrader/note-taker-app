@@ -12,9 +12,6 @@ class SimpleNote extends LitElement {
   }
 
   static get styles() {
-    console.log('color', this.color)
-    const mainColor = this.color || 'black'
-
     return css`
       textarea {
         resize: none;
@@ -22,6 +19,7 @@ class SimpleNote extends LitElement {
         width: 100%;
         min-height: 100px;
         overflow: hidden;
+        margin-top: 15px;
       }
       .note { 
         border: 2px solid gray;
@@ -47,7 +45,6 @@ class SimpleNote extends LitElement {
       p {
         white-space: pre-wrap;
         overflow-wrap: break-word;
-        color: ${unsafeCSS(mainColor)};
       }
     `
   }
