@@ -24,7 +24,6 @@ class SimpleNote extends LitElement {
         width: 250px;
         height: auto;
         padding: 20px;
-        white-space: pre-line;
       }
       .header {
         display: flex;
@@ -33,6 +32,10 @@ class SimpleNote extends LitElement {
       }
       img {
         cursor: pointer;
+      }
+      p {
+        white-space: pre-wrap;
+        overflow-wrap: break-word;
       }
     `
   }
