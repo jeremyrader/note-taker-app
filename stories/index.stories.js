@@ -1,10 +1,12 @@
 import { html } from 'lit-html'
 import { action } from '@storybook/addon-actions'
+import { withKnobs, color } from '@storybook/addon-knobs'
 
 import '../web-components/simple-note.js'
 
 export default {
   title: 'SimpleNote',
+  decorators: [withKnobs]
 }
 
 let note = `
@@ -38,6 +40,15 @@ export const NoteWithLongText = () => html`
 export const EmptyNote = () => html`
   <simple-note
     text=""
+    @delete-note="${action('delete')}"
+    @save-note="${action('save')}"
+    ></simple-note>
+`
+
+export const NoteWithColor = () => html`
+  <simple-note
+    text=${note}
+    color=${color('Color', 'blue', 'GROUP-ID1')}
     @delete-note="${action('delete')}"
     @save-note="${action('save')}"
     ></simple-note>

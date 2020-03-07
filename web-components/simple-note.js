@@ -1,15 +1,20 @@
-import { LitElement, css, html } from 'lit-element'
+import { LitElement, css, html, unsafeCSS } from 'lit-element'
+import { styleMap } from 'lit-html/directives/style-map'
 
 class SimpleNote extends LitElement {
 
   static get properties() {
     return { 
       edit: { type: Boolean },
-      text: { type: String }
+      text: { type: String },
+      color: { type: String }
     }
   }
 
   static get styles() {
+    console.log('color', this.color)
+    const mainColor = this.color || 'black'
+
     return css`
       textarea {
         resize: none;
@@ -30,12 +35,13 @@ class SimpleNote extends LitElement {
         justify-content: flex-end;
         padding: 5px;
       }
-      img {
+      svg {
         cursor: pointer;
       }
       p {
         white-space: pre-wrap;
         overflow-wrap: break-word;
+        color: ${unsafeCSS(mainColor)};
       }
     `
   }
@@ -85,10 +91,27 @@ class SimpleNote extends LitElement {
 
   render() {
     return html`
-       <div class="note">
+       <div style=${styleMap({ borderColor: this.color})} class="note">
           <div class="header">
-            <img src="/images/edit.svg" @click="${this.editNote}">
-            <img src="/images/x-circle.svg" @click="${this.deleteNote}">  
+            
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="feather feather-edit"
+              style=${styleMap({ color: this.color})}
+              @click="${this.editNote}"
+            >
+              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+            </svg>
+
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="feather feather-x-circle"
+              style=${styleMap({ color: this.color})}
+              @click="${this.deleteNote}"
+            >
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="15" y1="9" x2="9" y2="15"></line>
+              <line x1="9" y1="9" x2="15" y2="15"></line>
+            </svg>
           </div>
           ${
             this.edit
@@ -97,10 +120,11 @@ class SimpleNote extends LitElement {
                     id="content"
                     @input=${this.handleInputChange}
                     @blur=${this.editNote}
+                    style=${styleMap({ color: this.color})}
                     placeholder="Your note here..."
                   >${this.text}</textarea>
                 `
-              : html`<p>${this.text}</p>`
+              : html`<p style=${styleMap({ color: this.color})}>${this.text}</p>`
           }
         </div>
     `   
