@@ -4,16 +4,18 @@ import '../simple-note/simple-note.js'
 class NoteList extends LitElement {
 
   constructor() {
-    super() 
+    super()
+
     let notes = window.localStorage.getItem('notes')
-    if (notes) {
-      this.notes = JSON.parse(notes)
-    }
+    this.notes = notes ? JSON.parse(notes) : []
+
+    this.query = ''
   }
 
   static get properties() {
     return {
-      notes: { type: Array }
+      notes: { type: Array },
+      query: { type: String }
     }
   }
 
@@ -53,20 +55,23 @@ class NoteList extends LitElement {
   }
 
   render() {
-      return html`
-        <div>
-          ${
-            this.notes && this.notes.length > 0 ? this.notes.map(note => {
-              return html`
-                <simple-note text=${note.text} color=${note.color}
-                  @delete-click="${(e) => this.deleteNote(note.id)}"
-                  @save-click="${(e) => this.saveNote(note.id, e.detail.note)}">
-                </simple-note>
-              `
-            }) : html`<p class="empty">No notes to display</p>`
-          }
-        </div>
-      `
+
+    const queriedNotes = this.notes.filter(note => note.text.includes(this.query))
+
+    return html`
+      <div>
+        ${
+          this.notes.length > 0 ? queriedNotes.map(note => {
+            return html`
+              <simple-note text=${note.text} color=${note.color}
+                @delete-click="${(e) => this.deleteNote(note.id)}"
+                @save-click="${(e) => this.saveNote(note.id, e.detail.note)}">
+              </simple-note>
+            `
+          }) : html`<p class="empty">No notes to display</p>`
+        }
+      </div>
+    `
   }
 }
 

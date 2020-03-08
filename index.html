@@ -16,7 +16,12 @@
   let id = 0
 
   let commandBar = document.getElementsByTagName("command-bar")[0]
-  commandBar.addEventListener('search-input', function (e) { console.log(e.detail.query) }, false)
+
+  commandBar.addEventListener('search-input', function (e) {
+    let noteList = document.getElementsByTagName("note-list")[0]
+    noteList.query = e.detail.query
+  }, false)
+
   commandBar.addEventListener('create-click', function (e) {
     notes.push({
       id: (++id).toString(),
