@@ -28,6 +28,7 @@ class SimpleNote extends LitElement {
         width: 250px;
         height: auto;
         padding: 20px;
+        margin-bottom: 10px;
       }
       .header {
         display: flex;

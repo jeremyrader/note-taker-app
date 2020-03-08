@@ -22,6 +22,7 @@ class NoteList extends LitElement {
       div {
         display: flex;
         padding: 20px;
+        flex-wrap: wrap;
       }
       simple-note {
         margin-right: 10px;
