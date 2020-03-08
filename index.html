@@ -1,11 +1,17 @@
 <html>
   <head>
-    <script type="module" src="/web-components/simple-note.js"></script>
+    <script type="module" src="/src/components/command-bar/command-bar.js"></script>
+    <script type="module" src="/src/components/note-list/note-list.js"></script>
   </head>
   <body>
-    <h1>Notes app</h1>
-    <simple-note
-      text="For display only"
-        ></simple-note>
+    <h1>Notes App</h1>
+    <command-bar></command-bar>
+    <note-list></note-list>
   </body>
 </html>
+
+<script>
+  let commandBar = document.getElementsByTagName("command-bar")[0]
+  commandBar.addEventListener('search-input', function (e) { console.log(e.detail.query) }, false)
+  commandBar.addEventListener('create-click', function (e) { console.log('create') }, false)
+</script>
