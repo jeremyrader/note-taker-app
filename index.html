@@ -10,8 +10,22 @@
   </body>
 </html>
 
-<script>
+<script type="module">
+
+  let notes = []
+  let id = 0
+
   let commandBar = document.getElementsByTagName("command-bar")[0]
   commandBar.addEventListener('search-input', function (e) { console.log(e.detail.query) }, false)
-  commandBar.addEventListener('create-click', function (e) { console.log('create') }, false)
+  commandBar.addEventListener('create-click', function (e) {
+    notes.push({
+      id: (++id).toString(),
+      text: ''
+    })
+
+    let noteList = document.getElementsByTagName("note-list")[0]
+    noteList.notes=[]
+    noteList.notes=notes
+  }, false)
+  
 </script>
