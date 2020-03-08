@@ -8,5 +8,5 @@ export default {
 }
 
 export const ColorPicker = () => html`
-  <color-picker></color-picker>
+  <color-picker @choose-color=${action('choose color')}></color-picker>
 `
