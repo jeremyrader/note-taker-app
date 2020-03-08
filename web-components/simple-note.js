@@ -7,7 +7,8 @@ class SimpleNote extends LitElement {
     return { 
       edit: { type: Boolean },
       text: { type: String },
-      color: { type: String }
+      color: { type: String },
+      id: { type: String }
     }
   }
 
@@ -35,6 +36,7 @@ class SimpleNote extends LitElement {
       }
       svg {
         cursor: pointer;
+        margin-left: 5px;
       }
       svg:hover {
         opacity: 0.5;
@@ -58,25 +60,26 @@ class SimpleNote extends LitElement {
     }
   }
 
-  editNote() {
+  toggleEdit() {
     this.edit = !this.edit
-    if (!this.edit) {
-      let event = new CustomEvent('save-note', {
-        detail: {
-          message: this.text
-        }
-      });
-      this.dispatchEvent(event);
-    }
+  }
+
+  saveNote() {
+    this.toggleEdit()
+    this.dispatchEvent(new CustomEvent('save-click', {
+      detail: {
+        id: this.id,
+        note: this.text
+      }
+    }))
   }
 
   deleteNote() {
-    let event = new CustomEvent('delete-note', {
+    this.dispatchEvent(new CustomEvent('delete-click', {
       detail: {
-        message: 'clicked delete note'
+        id: this.id
       }
-    });
-    this.dispatchEvent(event);
+    }))
   }
 
   handleInputChange(event) {
@@ -96,15 +99,30 @@ class SimpleNote extends LitElement {
     return html`
        <div style=${styleMap({ borderColor: this.color})} class="note">
           <div class="header">
-            
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-              class="feather feather-edit"
-              style=${styleMap({ color: this.color})}
-              @click="${this.editNote}"
-            >
-              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-            </svg>
+            ${
+              this.edit
+                ? html`
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                      class="feather feather-save"
+                      style=${styleMap({ color: this.color})}
+                      @click="${(this.saveNote)}"
+                    >
+                      <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                      <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                      <polyline points="7 3 7 8 15 8"></polyline>
+                    </svg>
+                  `
+                : html`
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                      class="feather feather-edit"
+                      style=${styleMap({ color: this.color})}
+                      @click="${this.toggleEdit}"
+                    >
+                      <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                      <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                    </svg>
+                  `
+            }
 
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
               class="feather feather-x-circle"
@@ -121,8 +139,9 @@ class SimpleNote extends LitElement {
               ? html`
                   <textarea
                     id="content"
+                    spellcheck="false"
                     @input=${this.handleInputChange}
-                    @blur=${this.editNote}
+                    @blur=${this.saveNote}
                     style=${styleMap({ color: this.color})}
                     placeholder="Your note here..."
                   >${this.text}</textarea>

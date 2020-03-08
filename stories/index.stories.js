@@ -14,8 +14,8 @@ let note = `This is some filler text to see what it looks like when the note com
 export const NoteWithShortText = () => html`
   <simple-note
     text=${note}
-    @delete-note="${action('delete')}"
-    @save-note="${action('save')}"
+    @delete-click="${action('delete')}"
+    @save-click="${action('save')}"
     ></simple-note>
 `
 
@@ -28,24 +28,24 @@ let longNote = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do 
 export const NoteWithLongText = () => html`
   <simple-note
     text=${longNote}
-    @delete-note="${action('delete')}"
-    @save-note="${action('save')}"
-    ></simple-note>
+    @delete-click="${action('delete')}"
+    @save-click="${action('save')}"
+  ></simple-note>
 `
 
 export const EmptyNote = () => html`
   <simple-note
     text=""
-    @delete-note="${action('delete')}"
-    @save-note="${action('save')}"
-    ></simple-note>
+    @delete-click="${action('delete')}"
+    @save-click="${action('save')}"
+  ></simple-note>
 `
 
 export const NoteWithColor = () => html`
   <simple-note
     text=${note}
     color=${color('Color', 'blue', 'GROUP-ID1')}
-    @delete-note="${action('delete')}"
-    @save-note="${action('save')}"
-    ></simple-note>
+    @delete-click="${action('delete')}"
+    @save-click="${action('save')}"
+  ></simple-note>
 `
