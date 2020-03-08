@@ -37,15 +37,15 @@ class CommandBar extends LitElement {
         cursor:pointer;
         outline:none;
       }
-      button > span:hover: {
+      button:hover {
         opacity: 0.5
       }
-      button:active: {
-        background-color: gray;
+      button:active {
         opacity: 0.75
       }
       input {
         outline: none;
+        padding-left: 10px;
       }
       span {
         display: flex;
