@@ -2,7 +2,7 @@ import { html } from 'lit-html'
 import { action } from '@storybook/addon-actions'
 import { withKnobs, color } from '@storybook/addon-knobs'
 
-import '../web-components/simple-note.js'
+import './simple-note.js'
 
 export default {
   title: 'SimpleNote',
