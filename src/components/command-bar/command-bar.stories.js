@@ -1,4 +1,5 @@
 import { html } from 'lit-html'
+import { action } from '@storybook/addon-actions'
 
 import './command-bar.js'
 
@@ -7,5 +8,8 @@ export default {
 }
 
 export const CommandBar = () => html`
-  <command-bar></command-bar>
+  <command-bar
+    @create-click="${action('create')}"
+    @search-input="${action('search')}"
+  ></command-bar>
 `
