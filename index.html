@@ -17,15 +17,25 @@
 
 <script type="module">
 
-  let notes = []
   let id = 0
+
+  let notes = window.localStorage.getItem('notes')  
+  notes = notes ? JSON.parse(notes) : []
+
+  let noteList = document.getElementsByTagName("note-list")[0]
+  noteList.notes = notes
+  
+  noteList.addEventListener('update-notes', (e) => {
+    noteList.notes = e.detail.notes
+    saveNotes(e.detail.notes) 
+  })
 
   let commandBar = document.getElementsByTagName("command-bar")[0]
 
   commandBar.addEventListener('search-input', function (e) {
     let noteList = document.getElementsByTagName("note-list")[0]
     noteList.query = e.detail.query
-  }, false)
+  })
 
   commandBar.addEventListener('create-click', function (e) {
     notes.push({
@@ -33,9 +43,15 @@
       text: ''
     })
 
+    saveNotes(notes)
+
     let noteList = document.getElementsByTagName("note-list")[0]
     noteList.notes=[]
     noteList.notes=notes
-  }, false)
+  })
+
+  function saveNotes(notes) {
+    window.localStorage.setItem('notes', JSON.stringify(notes))
+  }
   
 </script>

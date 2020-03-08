@@ -1,4 +1,6 @@
 import { html } from 'lit-html'
+import { action } from '@storybook/addon-actions'
+
 import './note-list.js'
 
 export default {
@@ -14,11 +16,14 @@ const savedNotes = [
 window.localStorage.setItem('notes', JSON.stringify([]))
 
 export const SavedNotes = () => html`
-  <note-list notes=${JSON.stringify(savedNotes)}></note-list>
+  <note-list
+    notes=${JSON.stringify(savedNotes)}
+    @update-notes="${action('update')}"
+  ></note-list>
 `
 
 export const EmptyNoteList = () => html`
-  <note-list></note-list>
+  <note-list @update-notes="${action('update')}"></note-list>
 `
 
 const wrappedNotes = [
@@ -35,5 +40,8 @@ const wrappedNotes = [
 ]
 
 export const WrappedNoteList = () => html`
-  <note-list notes=${JSON.stringify(wrappedNotes)}></note-list>
+  <note-list 
+    notes=${JSON.stringify(wrappedNotes)}
+    @update-notes="${action('update')}"
+  ></note-list>
 `

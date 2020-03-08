@@ -6,9 +6,7 @@ class NoteList extends LitElement {
   constructor() {
     super()
 
-    let notes = window.localStorage.getItem('notes')
-    this.notes = notes ? JSON.parse(notes) : []
-
+    this.notes = []
     this.query = ''
   }
 
@@ -36,22 +34,33 @@ class NoteList extends LitElement {
   }
 
   deleteNote(id) {
-    let index = this.notes.findIndex((element) => {
+    let notes = [...this.notes]
+    let index = notes.findIndex((element) => {
       return element.id == id
     })
 
-    this.notes.splice(index, 1)
-    this.notes = [...this.notes]
+    notes.splice(index, 1)
+
+    this.dispatchEvent(new CustomEvent('update-notes', {
+      detail: {
+        notes: notes
+      }
+    }))
   }
 
   saveNote(id, updated) {
-    this.notes.find((element) => {
+    let notes = [...this.notes]
+    notes.find((element) => {
       if (element.id == id) {
         element.text = updated
       }
     })
 
-    window.localStorage.setItem('notes', JSON.stringify(this.notes))
+    this.dispatchEvent(new CustomEvent('update-notes', {
+      detail: {
+        notes: notes,
+      }
+    }))
   }
 
   render() {
