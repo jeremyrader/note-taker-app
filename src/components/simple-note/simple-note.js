@@ -21,7 +21,8 @@ class SimpleNote extends LitElement {
         min-height: 100px;
         overflow: hidden;
         margin-top: 15px;
-        padding: 10px;
+        padding-left: 10px;
+        padding-top: 10px;
       }
       .note { 
         border: 2px solid gray;
