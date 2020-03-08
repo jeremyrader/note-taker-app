@@ -16,9 +16,6 @@
 </html>
 
 <script type="module">
-
-  let id = 0
-
   let notes = window.localStorage.getItem('notes')  
   notes = notes ? JSON.parse(notes) : []
 
@@ -38,8 +35,11 @@
   })
 
   commandBar.addEventListener('create-click', function (e) {
+
+    const uint32 = window.crypto.getRandomValues(new Uint32Array(1))[0]
+
     notes.push({
-      id: (++id).toString(),
+      id: uint32.toString(16),
       text: ''
     })
 
