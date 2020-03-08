@@ -1,12 +1,17 @@
 <html>
   <head>
+    <title>Notes App</title>
     <script type="module" src="/src/components/command-bar/command-bar.js"></script>
     <script type="module" src="/src/components/note-list/note-list.js"></script>
+    <link rel="stylesheet" type="text/css" href="main.css">
   </head>
   <body>
-    <h1>Notes App</h1>
-    <command-bar></command-bar>
-    <note-list></note-list>
+    <div class="container">
+      <div class="app-header">
+        <command-bar></command-bar>
+      </div>
+      <note-list></note-list>
+    </div>
   </body>
 </html>
 
