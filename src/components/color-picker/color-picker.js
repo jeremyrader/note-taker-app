@@ -5,7 +5,6 @@ class ColorPicker extends LitElement {
 
   constructor() {
     super()
-    this.color = this.color || 'black'
     this.showPicker = false
   }
 

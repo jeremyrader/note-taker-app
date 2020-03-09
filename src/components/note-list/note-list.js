@@ -54,7 +54,6 @@ class NoteList extends LitElement {
 
     notes[index] = updated
 
-    console.log(notes)
     this.dispatchEvent(new CustomEvent('update-notes', {
       detail: {
         notes: notes,
@@ -63,14 +62,11 @@ class NoteList extends LitElement {
   }
 
   render() {
-    console.log(this.notes)
     const queriedNotes = this.notes.filter(note => note.text.includes(this.query))
-
     return html`
       <div>
         ${
           this.notes.length > 0 ? queriedNotes.map(note => {
-            console.log('rendered', note)
             return html`
               <simple-note id=${note.id} text=${note.text} color=${note.color}
                 @delete-click="${(e) => this.deleteNote(note.id)}"
