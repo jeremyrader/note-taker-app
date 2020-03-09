@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "polymer serve",
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "start-storybook -s ./ -p 6006",
     "build-storybook": "build-storybook"
@@ -13,7 +14,8 @@
   "license": "ISC",
   "dependencies": {
     "feather-icons": "^4.26.0",
-    "lit-element": "^2.2.1"
+    "lit-element": "^2.2.1",
+    "polymer-cli": "^1.9.11"
   },
   "devDependencies": {
     "@babel/core": "^7.8.7",
