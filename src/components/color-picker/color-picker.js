@@ -5,7 +5,7 @@ class ColorPicker extends LitElement {
 
   constructor() {
     super()
-    this.color = 'blue'
+    this.color = this.color || 'black'
     this.showPicker = false
   }
 
@@ -18,14 +18,22 @@ class ColorPicker extends LitElement {
 
   static get styles() {
     return css`
-      .box {
-        height: 20px;
-        width: 20px;
+      .picker {
         border: 2px solid black;
         cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        z-index: 1;
       }
-      .option-list {
-        z-index: 50;
+      .selected {
+        height: 20px;
+        width: 20px;
+        cursor: pointer;
+      }
+      .color {
+        height: 20px;
+        width: 20px;
       }
     `
   }
@@ -42,16 +50,23 @@ class ColorPicker extends LitElement {
   }
 
   render() {
-      let colors = ['green', 'blue', 'orange', 'red', 'purple']
+      let colors = ['black', 'green', 'blue', 'orange', 'red', 'purple']
+
+      let index = colors.findIndex((element) => {
+        return element === this.color
+      })
+
+      colors.splice(index, 1)
+
       return html`
-        <div class="box" style=${styleMap({ backgroundColor: this.color})} @click=${(e) => this.showPicker = true}></div>
-        <div class="option-list">
+        <div class="picker">
+          <div class="selected" style=${styleMap({ backgroundColor: this.color})}  @click=${(e) => this.showPicker = !this.showPicker}></div>
           ${
             this.showPicker
               ? html`
                   ${
                   colors.map(color => {
-                    return html`<div class="box" style=${styleMap({ backgroundColor: color})} @click=${(e) => this.handleClick(color)}></div>`
+                    return html`<div class="color" style=${styleMap({ backgroundColor: color})} @click=${(e) => this.handleClick(color)}></div>`
                   })
                 }
                 `

@@ -1,6 +1,8 @@
 import { LitElement, css, html, unsafeCSS } from 'lit-element'
 import { styleMap } from 'lit-html/directives/style-map'
 
+import '../color-picker/color-picker.js'
+
 class SimpleNote extends LitElement {
 
   static get properties() {
@@ -51,6 +53,9 @@ class SimpleNote extends LitElement {
         white-space: pre-wrap;
         overflow-wrap: break-word;
       }
+      color-picker {
+        margin-right: 25px;
+      }
     `
   }
 
@@ -72,7 +77,8 @@ class SimpleNote extends LitElement {
     this.dispatchEvent(new CustomEvent('save-click', {
       detail: {
         id: this.id,
-        note: this.text
+        text: this.text,
+        color: this.color
       }
     }))
   }
@@ -102,6 +108,11 @@ class SimpleNote extends LitElement {
     return html`
        <div style=${styleMap({ borderColor: this.color})} class="note">
           <div class="header">
+            ${ 
+              this.edit
+                ? html`<color-picker @choose-color=${(e) => this.color = e.detail.color} color=${this.color}></color-picker>`
+                : ''
+            }
             ${
               this.edit
                 ? html`

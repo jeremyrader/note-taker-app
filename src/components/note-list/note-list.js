@@ -50,12 +50,11 @@ class NoteList extends LitElement {
 
   saveNote(id, updated) {
     let notes = [...this.notes]
-    notes.find((element) => {
-      if (element.id == id) {
-        element.text = updated
-      }
-    })
+    let index = notes.findIndex(element => element.id === id)
 
+    notes[index] = updated
+
+    console.log(notes)
     this.dispatchEvent(new CustomEvent('update-notes', {
       detail: {
         notes: notes,
@@ -64,17 +63,18 @@ class NoteList extends LitElement {
   }
 
   render() {
-
+    console.log(this.notes)
     const queriedNotes = this.notes.filter(note => note.text.includes(this.query))
 
     return html`
       <div>
         ${
           this.notes.length > 0 ? queriedNotes.map(note => {
+            console.log('rendered', note)
             return html`
-              <simple-note text=${note.text} color=${note.color}
+              <simple-note id=${note.id} text=${note.text} color=${note.color}
                 @delete-click="${(e) => this.deleteNote(note.id)}"
-                @save-click="${(e) => this.saveNote(note.id, e.detail.note)}">
+                @save-click="${(e) => this.saveNote(note.id, e.detail)}">
               </simple-note>
             `
           }) : html`<p class="empty">No notes to display</p>`
